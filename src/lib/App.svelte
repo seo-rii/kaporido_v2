@@ -6,13 +6,26 @@
     import Effect from "$lib/Effect.svelte";
 
     const scene = setContext('scene', writable(undefined));
+    const selectable = setContext('selectable', writable(0));
 </script>
 
-<Canvas>
-    <T.Scene bind:ref={$scene}>
-        <World>
-            <slot/>
-        </World>
-    </T.Scene>
-    <Effect/>
-</Canvas>
+<main class:cursor={$selectable}>
+    <Canvas>
+        <T.Scene bind:ref={$scene}>
+            <World>
+                <slot/>
+            </World>
+        </T.Scene>
+        <Effect/>
+    </Canvas>
+</main>
+
+<style lang="scss">
+  main {
+    height: 100%;
+
+    &.cursor {
+      cursor: pointer;
+    }
+  }
+</style>
