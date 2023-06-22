@@ -1,5 +1,10 @@
 lockfileVersion: '6.0'
 
+dependencies:
+  postprocessing:
+    specifier: ^6.32.1
+    version: 6.32.1(three@0.153.0)
+
 devDependencies:
   '@sveltejs/adapter-auto':
     specifier: ^2.1.0
@@ -777,6 +782,15 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /postprocessing@6.32.1(three@0.153.0):
+    resolution: {integrity: sha512-GiUv5vN/QCWnPJ3DdYPYn/4V1amps94T/0jFPSUL40KfaLCkfE9yPudzTtJJQjs168QNpwkmnvYF9RcP3HiAWA==}
+    engines: {node: '>= 0.13.2'}
+    peerDependencies:
+      three: '>= 0.138.0 < 0.154.0'
+    dependencies:
+      three: 0.153.0
+    dev: false
+
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
@@ -970,7 +984,6 @@ packages:
 
   /three@0.153.0:
     resolution: {integrity: sha512-OCP2/uQR6GcDpSLnJt/3a4mdS0kNWcbfUXIwLoEMgLzEUIVIYsSDwskpmOii/AkDM+BBwrl6+CKgrjX9+E2aWg==}
-    dev: true
 
   /to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
