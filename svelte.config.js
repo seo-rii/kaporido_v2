@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -11,6 +11,9 @@ const config = {
         adapter: adapter(),
         alias: {
             $lib: './src/lib',
+        },
+        paths: {
+            base: '/kaporido_v2'
         }
     }
 };
