@@ -1,15 +1,21 @@
 <script lang="ts" context="module">
-    import {MeshStandardMaterial} from "three";
+    import {MeshPhysicalMaterial, MeshStandardMaterial} from "three";
 
-    const material = new MeshStandardMaterial({
+    const material = new MeshPhysicalMaterial({
         color: 0xf2f2f2,
         roughness: 0.7,
+        thickness: 0.1,
         metalness: 0.4,
         emissive: 0xdddddd,
         emissiveIntensity: 0.38,
         side: 2,
-        transparent: true,
-        opacity: 0.8,
+    });
+    const materialX = new MeshPhysicalMaterial({
+        color: 0x222222,
+        roughness: 0.7,
+        thickness: 0.1,
+        metalness: 0.4,
+        side: 2,
     });
 </script>
 <script lang="ts">
@@ -25,6 +31,9 @@
     $: _y = (y - (BOARD_SIZE - 1) / 2) / BOARD_SIZE * MAP_SIZE;
 </script>
 
-<T.Mesh position.y={0.1} castShadow {material} position={[_x, 0.151, _y]}>
-    <T.BoxGeometry args={[_s, 0.3, _s]}/>
+<T.Mesh castShadow {material} position={[_x, 0.251, _y]}>
+    <T.BoxGeometry args={[_s, 0.2, _s]}/>
+</T.Mesh>
+<T.Mesh castShadow material={materialX} position={[_x, 0.101, _y]}>
+    <T.BoxGeometry args={[_s, 0.2, _s]}/>
 </T.Mesh>
