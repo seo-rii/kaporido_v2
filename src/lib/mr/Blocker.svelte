@@ -17,14 +17,14 @@
     let hover, material;
 
     function gx(x: number, d: number) {
-        if (d === 1) return (x - (BOARD_SIZE + 2) / 2) / BOARD_SIZE * MAP_SIZE;
-        if (d === 2) return (x - (BOARD_SIZE - 0) / 2) / BOARD_SIZE * MAP_SIZE;
+        if (d === 1) return x - 1;
+        if (d === 2) return x;
         return -1;
     }
 
     function gy(y: number, d: number) {
-        if (d === 1) return (y - (BOARD_SIZE - 0) / 2) / BOARD_SIZE * MAP_SIZE;
-        if (d === 2) return (y - (BOARD_SIZE + 2) / 2) / BOARD_SIZE * MAP_SIZE;
+        if (d === 1) return y;
+        if (d === 2) return y - 1;
         return -1;
     }
 
@@ -38,8 +38,16 @@
     $: _w = MAP_SIZE / BOARD_SIZE * 0.16;
     $: $_x = gx(x, d);
     $: $_y = gy(y, d);
+    $: __x = ($_x - (BOARD_SIZE) / 2) / BOARD_SIZE * MAP_SIZE;
+    $: __y = ($_y - (BOARD_SIZE) / 2) / BOARD_SIZE * MAP_SIZE;
     $: $hgl = hover ? 0.5 : 0;
     $: $r = (d - 1) * Math.PI / 2;
+    let internal = false
+
+    $: {
+        if (3 <= $_x && $_x <= 6 && 3 <= $_y && $_y <= 6) internal = true;
+        else internal = false;
+    }
 
     $: {
         if (material) material.dispose();
@@ -47,8 +55,8 @@
         emissive.lerp(HIGHLIGHT_COLOR, $hgl);
         material = true ? new MeshPhysicalMaterial({
             color: kaist ? 0x8f34eb : 0x8f34eb,
-            roughness: 0.43,
-            transmission: 1,
+            roughness: 0.033,
+            transmission: 0.8,
             thickness: 1,
             emissive,
             emissiveIntensity: (1.48 + $hgl * 4) * 0.8,
@@ -73,11 +81,18 @@
     }
 </script>
 
-<T.Mesh position.y={0.1} castShadow {material} position={[$_y, $z, $_x]} rotation.y={$r}
+<T.Mesh castShadow {material} position={[__y, $z, __x]} rotation.y={$r}
         on:pointerenter={() => {hover = true;$selectable++;}} on:pointerleave={() =>{ hover = false;$selectable--;}}>
     <T.BoxGeometry args={[_l, 0.6, _w]}/>
 </T.Mesh>
-<T.Mesh position.y={0.1} castShadow position={[$_y, $z, $_x]} rotation.y={$r}>
-    <T.MeshBasicMaterial color={kaist ? POSTECH_COLOR : KAIST_COLOR}/>
-    <T.BoxGeometry args={[_l, 0.6, _w]}/>
-</T.Mesh>
+{#if internal}
+    <T.Mesh castShadow position={[__y, $z, __x]} rotation.y={$r}>
+        <T.MeshBasicMaterial color={kaist ? POSTECH_COLOR : KAIST_COLOR}/>
+        <T.BoxGeometry args={[_l, 0.6, _w]}/>
+    </T.Mesh>
+{:else}
+    <T.Mesh castShadow position={[__y, $z, __x]} rotation.y={$r}>
+        <T.MeshBasicMaterial color={kaist ? KAIST_COLOR : POSTECH_COLOR} transparent opacity={0.16}/>
+        <T.BoxGeometry args={[_l, 0.6, _w]}/>
+    </T.Mesh>
+{/if}

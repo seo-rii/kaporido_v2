@@ -22,15 +22,16 @@
 
     onMount(() => {
         for (let i = 1; i <= 6; i++) {
-            blocker_ik.push([i, -1.2, 1])
-            blocker_ip.push([i, BOARD_SIZE + 1.2, 1])
+            const x = BOARD_SIZE * i / 6
+            blocker_ik.push([x, -1.2, 1])
+            blocker_ip.push([x, BOARD_SIZE + 1.2, 1])
         }
 
         setTimeout(() => {
             blocker_ik[0] = [1, 1, 1]
             blocker_ik[1] = [1, 1, 2]
             blocker_ip[0] = [1, 7, 1]
-            blocker_ip[2] = [4, 4, 1]
+            blocker_ip[2] = [5, 5, 1]
         }, 2000)
     })
 </script>
@@ -46,9 +47,11 @@
         <!--        <T.MeshPhysicalMaterial color="#aaa" metalness={0.126} roughness={0.496} transmission={0.999} thickness={0.2}/>-->
     </T.Mesh>
     <T.Mesh position.y={0.61} castShadow
-        on:pointerenter={() => {mask = false}} on:pointerleave={() =>{mask = true}}>
-        <T.BoxGeometry args={[2.12, 1.2, 2.12]}/>
-        <T.MeshPhysicalMaterial color="#aaa" metalness={0.026} roughness={0.396 * (1 - $op)} transmission={(1 - $op * 2) * 0.999} thickness={0.2} transparent opacity={1 - 0.6 * $op}/>
+            on:pointerenter={() => {mask = false}} on:pointerleave={() =>{mask = true}}>
+        <T.BoxGeometry args={[1.95, 1.2, 1.95]}/>
+        <T.MeshPhysicalMaterial color="#aaa" metalness={0.026} roughness={0.396 * (1 - $op)}
+                                transmission={(1 - $op * 2) * 0.999} thickness={0.2} transparent
+                                opacity={1 - 0.6 * $op}/>
     </T.Mesh>
 
     {#each {length: BOARD_SIZE} as _, x}
