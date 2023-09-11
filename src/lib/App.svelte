@@ -16,7 +16,7 @@
                 <slot/>
             </World>
         </T.Scene>
-<!--        <Effect/>-->
+        <Effect/>
     </Canvas>
 </main>
 
