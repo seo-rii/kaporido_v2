@@ -8,13 +8,12 @@
         SMAAPreset,
         BloomEffect,
         KernelSize, DepthOfFieldEffect,
-
     } from 'postprocessing'
     import {Vector3} from "three";
 
     const {scene, renderer, camera} = useThrelte()
     const composer = new EffectComposer(renderer)
-    const MAX_Z = 2.4, MAX_X = 3.7, FOCUS = 0.00157, UNBLUR = 0.019;
+    const MAX_Z = 2.4, MAX_X = 3.7, FOCUS = 0.00257, UNBLUR = 0.019;
     let dof = null, bloom = null, target = new Vector3(0, 0.2, 0), perf = 1020;
 
     const setupEffectComposer = (camera) => {
