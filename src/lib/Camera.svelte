@@ -12,7 +12,7 @@
         _cameraP3 = tweened(0, {duration: 2000, easing: expoOut});
 
     $: [$_cameraP1, $_cameraP2, $_cameraP3] =
-        [7.6 * Math.exp(-$cameraZ) * Math.cos($rotation) + 0.2, -7.5 + 14 * Math.exp(0.5 * Math.sin($cameraZ)), 7.6 * Math.exp(-$cameraZ) * Math.sin($rotation)];
+        [7.6 * Math.exp(-$cameraZ) * Math.cos($rotation) + 0.2, -9.5 + 15 * Math.exp(0.5 * Math.sin($cameraZ)), 7.6 * Math.exp(-$cameraZ) * Math.sin($rotation)];
 
     let click = false, drag = false, dragged = false, lastX = 0, lastY = 0, initX = 0, initY = 0, round = 0,
         cursor = {x: 0, y: 0};
@@ -97,26 +97,26 @@
     const {renderer: {domElement: target}} = useThrelte();
 
     $: {
-        $rotation = round * Math.PI;
+        rotation.set(round * Math.PI, {duration: 3000, easing: expoOut});
         $cameraZ = 0.35;
     }
 
     onMount(() => {
-        target.addEventListener('mousedown', mouseDownHandler);
-        target.addEventListener('mousemove', mouseMoveHandler);
-        target.addEventListener('mouseup', mouseUpHandler);
-        // target.addEventListener('touchstart', touchStartHandler);
-        // target.addEventListener('touchmove', touchMoveHandler);
-        // target.addEventListener('touchend', touchEndHandler);
-        target.addEventListener('click', clickHandler);
+        target.addEventListener('mousedown', mouseDownHandler, {passive: true});
+        target.addEventListener('mousemove', mouseMoveHandler, {passive: true});
+        target.addEventListener('mouseup', mouseUpHandler, {passive: true});
+        target.addEventListener('touchstart', touchStartHandler, {passive: true});
+        target.addEventListener('touchmove', touchMoveHandler, {passive: true});
+        target.addEventListener('touchend', touchEndHandler, {passive: true});
+        target.addEventListener('click', clickHandler, {passive: true});
 
         return () => {
             target.removeEventListener('mousedown', mouseDownHandler);
             target.removeEventListener('mousemove', mouseMoveHandler);
             target.removeEventListener('mouseup', mouseUpHandler);
-            // target.removeEventListener('touchstart', touchStartHandler);
-            // target.removeEventListener('touchmove', touchMoveHandler);
-            // target.removeEventListener('touchend', touchEndHandler);
+            target.removeEventListener('touchstart', touchStartHandler);
+            target.removeEventListener('touchmove', touchMoveHandler);
+            target.removeEventListener('touchend', touchEndHandler);
             target.removeEventListener('click', clickHandler);
         }
     });
