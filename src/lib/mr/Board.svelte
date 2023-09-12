@@ -3,40 +3,23 @@
     import {T} from '@threlte/core'
     import {degToRad} from "three/src/math/MathUtils.js"
     import Place from "$lib/mr/Place.svelte"
-    import {onMount, setContext} from "svelte"
+    import {setContext} from "svelte"
     import Blocker from "$lib/mr/Blocker.svelte";
-    import {tick} from "svelte";
     import {tweened} from "svelte/motion";
 
     const MAP_SIZE = setContext('MAP_SIZE', 6)
     const BOARD_SIZE = setContext('BOARD_SIZE', 9)
 
-    export let blocker_ik = [],
-        blocker_ip = [],
-        blocker_lk = [],
-        blocker_lp = [],
-        mask = true
+    export let blocker,
+        mask = true,
+        round = 0,
+        act = false
 
     const op = tweened(mask ? 0 : 1, {duration: 500})
     $: $op = mask ? 0 : 1;
-
-    onMount(() => {
-        for (let i = 1; i <= 6; i++) {
-            const x = BOARD_SIZE * i / 6
-            blocker_ik.push([x, -1.2, 1])
-            blocker_ip.push([x, BOARD_SIZE + 1.2, 1])
-        }
-
-        setTimeout(() => {
-            blocker_ik[0] = [1, 1, 1]
-            blocker_ik[1] = [1, 1, 2]
-            blocker_ip[0] = [1, 7, 1]
-            blocker_ip[2] = [5, 5, 1]
-        }, 2000)
-    })
 </script>
 
-<App>
+<App bind:round {act} on:act>
     <T.Mesh receiveShadow rotation.x={degToRad(-90)}>
         <T.CircleGeometry args={[8, 72]}/>
         <T.MeshStandardMaterial color="#555"/>
@@ -60,11 +43,11 @@
         {/each}
     {/each}
 
-    {#each blocker_ik as [x, y, d], i(i)}
+    {#each blocker.kaist.i as [x, y, d], i(i)}
         <Blocker kaist {x} {y} {d}/>
     {/each}
 
-    {#each blocker_ip as [x, y, d], i(i)}
+    {#each blocker.potek.i as [x, y, d], i(i)}
         <Blocker postech {x} {y} {d}/>
     {/each}
 </App>

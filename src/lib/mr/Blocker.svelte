@@ -28,8 +28,8 @@
         return -1;
     }
 
-    let _x = tweened(gx(x, d), {easing: quadInOut, duration: 2000}),
-        _y = tweened(gy(y, d), {easing: quadInOut, duration: 2000});
+    let _x = tweened(gx(x, d), {easing: quadInOut, duration: 1600}),
+        _y = tweened(gy(y, d), {easing: quadInOut, duration: 1600});
     let z = tweened(3.31, {easing: quartInOut, duration: 1000});
     z.set(0.31, {easing: cubicOut, duration: 1500});
     let r = tweened((d - 1) * Math.PI / 2, {easing: quartInOut, duration: 1000});
@@ -77,7 +77,7 @@
         px = x;
         py = y;
         z.set(2.2, {easing: quadOut, duration: 1000});
-        setTimeout(() => z.set(0.31, {easing: quartInOut, duration: 1500}), 500);
+        setTimeout(() => z.set(0.31, {easing: quartInOut, duration: 1500}), 900);
     }
 </script>
 

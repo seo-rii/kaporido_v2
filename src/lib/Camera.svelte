@@ -2,9 +2,12 @@
     import {T, useThrelte} from '@threlte/core';
     import {tweened} from "svelte/motion";
     import {expoOut} from "svelte/easing";
-    import {onMount} from "svelte";
+    import {createEventDispatcher, onMount} from "svelte";
 
-    const rotation = tweened(0, {duration: 1000, easing: expoOut});
+    export let round = 0, act = false;
+
+    const dispatch = createEventDispatcher();
+    const rotation = tweened(-Math.PI, {duration: 1000, easing: expoOut});
     const cameraZ = tweened(0, {duration: 100, easing: expoOut});
 
     const _cameraP1 = tweened(0, {duration: 2000, easing: expoOut}),
@@ -14,7 +17,7 @@
     $: [$_cameraP1, $_cameraP2, $_cameraP3] =
         [7.6 * Math.exp(-$cameraZ) * Math.cos($rotation) + 0.2, -9.5 + 15 * Math.exp(0.5 * Math.sin($cameraZ)), 7.6 * Math.exp(-$cameraZ) * Math.sin($rotation)];
 
-    let click = false, drag = false, dragged = false, lastX = 0, lastY = 0, initX = 0, initY = 0, round = 0,
+    let click = false, drag = false, dragged = false, lastX = 0, lastY = 0, initX = 0, initY = 0,
         cursor = {x: 0, y: 0};
 
     const mouseDownHandler = (e: MouseEvent) => {
@@ -88,16 +91,24 @@
         drag = false;
     }
 
+    let f = false;
+
     const clickHandler = () => {
         if (click && !dragged) {
-            round++;
+            if (!act || f) {
+                f = false;
+                round++;
+            } else {
+                f = true;
+                dispatch('act');
+            }
         }
     }
 
     const {renderer: {domElement: target}} = useThrelte();
 
     $: {
-        rotation.set(round * Math.PI, {duration: 3000, easing: expoOut});
+        rotation.set((round - 1) * Math.PI, {duration: 3000, easing: expoOut});
         $cameraZ = 0.35;
     }
 
