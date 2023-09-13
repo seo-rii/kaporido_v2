@@ -42,9 +42,14 @@
     })
 </script>
 
-<div class="turn">
-    {turn} {round}
+<div class="turn kaist" class:current={!(round % 2)}>
+    KAIST
 </div>
+<div class="turn postech" class:current={(round % 2)}>
+    POSTECH
+</div>
+<img class="avatar" class:current={!(round % 2)} src="/kaporido_v2/nupjuk.jpeg">
+<img class="avatar" class:current={(round % 2)} src="/kaporido_v2/ponix.webp">
 <Board bind:round bind:blocker act on:act={next}/>
 
 <style lang="scss">
@@ -54,7 +59,50 @@
     font-weight: bold;
     text-align: center;
     margin: 1rem;
-    background: white;
+    width: 220px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    opacity: 0.3;
+    transition: all 0.3s ease-in-out;
+    top: 140px;
+    font-weight: 200;
     user-select: none;
+
+    &.current {
+      top: 0;
+      opacity: 1;
+      height: 120px;
+      font-weight: 500;
+    }
+
+    &.kaist {
+      background-color: #437cf6;
+      color: white;
+    }
+
+    &.postech {
+      background-color: #ef43a4;
+      color: white;
+    }
+  }
+
+  .avatar {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    top: 100px;
+    left: 210px;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    border-radius: 12px;
+    user-select: none;
+
+    &.current {
+      top: 50px;
+      opacity: 1;
+    }
   }
 </style>
