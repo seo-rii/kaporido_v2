@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import {MeshPhysicalMaterial, MeshStandardMaterial} from "three";
+    import {MeshPhysicalMaterial} from "three";
 
     const materialX = new MeshPhysicalMaterial({
         color: 0x222222,

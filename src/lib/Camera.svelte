@@ -4,7 +4,7 @@
     import {expoOut} from "svelte/easing";
     import {createEventDispatcher, onMount} from "svelte";
 
-    export let round = 0, act = false;
+    export let round = 0, dragged = false;
 
     const dispatch = createEventDispatcher();
     const rotation = tweened(-Math.PI, {duration: 1000, easing: expoOut});
@@ -17,7 +17,7 @@
     $: [$_cameraP1, $_cameraP2, $_cameraP3] =
         [7.6 * Math.exp(-$cameraZ) * Math.cos($rotation) + 0.2, -9.5 + 15 * Math.exp(0.5 * Math.sin($cameraZ)), 7.6 * Math.exp(-$cameraZ) * Math.sin($rotation)];
 
-    let click = false, drag = false, dragged = false, lastX = 0, lastY = 0, initX = 0, initY = 0,
+    let click = false, drag = false, lastX = 0, lastY = 0, initX = 0, initY = 0,
         cursor = {x: 0, y: 0};
 
     const mouseDownHandler = (e: MouseEvent) => {
@@ -93,17 +93,7 @@
 
     let f = false;
 
-    const clickHandler = () => {
-        if (click && !dragged) {
-            if (!act || f) {
-                f = false;
-                round++;
-            } else {
-                f = true;
-                dispatch('act');
-            }
-        }
-    }
+    const clickHandler = () => click && !dragged && dispatch('act');
 
     const {renderer: {domElement: target}} = useThrelte();
 

@@ -1,11 +1,12 @@
 <script lang="ts">
     import Board from "$lib/mr/Board.svelte";
     import {onMount} from "svelte";
+    import {fly} from "svelte/transition";
 
-    let round = 0, blocker = {kaist: {i: [], l: []}, potek: {i: [], l: []}};
+    let round = 0, blocker = {kaist: {i: [], l: []}, potek: {i: [], l: []}}, dragged = false, f = false, win = null;
     $: turn = round % 2 ? "POSTECH" : "KAIST";
 
-    const ACTION_MOVE = 1, ACTION_PLACE_I = 2, ACTION_PLACE_L = 3;
+    const ACTION_MOVE = 1, ACTION_PLACE_I = 2, ACTION_PLACE_L = 3, GAME_FIN = 4;
 
     let actions = [
         [3, 7, 1, 1],
@@ -17,7 +18,8 @@
         [2, 1, 7, 1],
         [2, 5, 5, 1],
         [2, 6, 6, 2],
-    ]
+        [4, 1, 2],
+    ];
 
     function act(type, x, y, w) {
         const target = round % 2 ? blocker.potek : blocker.kaist;
@@ -39,11 +41,20 @@
                 break;
             }
         }
+        if (type === GAME_FIN) {
+            win = [x, y];
+        }
         blocker = blocker;
     }
 
     function next() {
-        act(...actions[round]);
+        if (!act || f) {
+            f = false;
+            round++;
+        } else {
+            f = true;
+            act(...actions[round]);
+        }
     }
 
     onMount(() => {
@@ -60,15 +71,38 @@
     })
 </script>
 
+{#if win}
+    <div in:fly style="position: fixed;width: 100%;height: 100%;background: #00000055"></div>
+    <div class="win" in:fly={{x: 100}}>
+        {#if win[0] === 1}
+            <img src="/kaporido_v2/nupjuk.jpeg" style="width: 120px;height: 120px;border-radius: 12px">
+        {:else}
+            <img src="/kaporido_v2/ponix.webp" style="width: 120px;height: 120px;border-radius: 12px">
+        {/if}
+        <div style="font-size: 3em;color: white;margin: 1em 0 0.4em 0">{['', 'KAIST', 'POSTECH'][win[0]]} 승리!</div>
+        <p style="font-size: 1.2em;color: white;margin: 0">
+            {#if win[1] === 1}
+                우승 조건 달성
+            {:else if win[1] === 2}
+                상대 팀 실격
+            {/if}
+        </p>
+    </div>
+{/if}
 <div class="turn kaist" class:current={!(round % 2)}>
     KAIST
 </div>
 <div class="turn postech" class:current={(round % 2)}>
     POSTECH
 </div>
+<div style="position: fixed;left: 26px;top: 26px;color: white;font-size: 20px">#{Math.floor(round / 2) + 1}</div>
 <img class="avatar" class:current={!(round % 2)} src="/kaporido_v2/nupjuk.jpeg">
 <img class="avatar" class:current={(round % 2)} src="/kaporido_v2/ponix.webp">
-<Board bind:round bind:blocker act on:act={next}/>
+
+<div class="notify" class:show={dragged}>아무 곳이나 눌러서 돌아가기</div>
+<div class="notify" class:show={!dragged && f && !win}>다음</div>
+
+<Board bind:round bind:blocker bind:dragged on:act={next}/>
 
 <style lang="scss">
   .turn {
@@ -97,12 +131,12 @@
     }
 
     &.kaist {
-      background-color: #437cf6;
+      background-color: #437cf6cc;
       color: white;
     }
 
     &.postech {
-      background-color: #ef43a4;
+      background-color: #ef43a4cc;
       color: white;
     }
   }
@@ -122,5 +156,37 @@
       top: 50px;
       opacity: 1;
     }
+  }
+
+  .notify {
+    opacity: 0;
+    position: fixed;
+    margin: 1rem;
+    bottom: 0;
+    background: #77777755;
+    color: #ffffff;
+    user-select: none;
+    transition: all 0.3s ease-in-out;
+    padding: 0.5rem;
+    font-size: 1.2em;
+    border-radius: 12px;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  .win {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 40%;
+    background: #000000cc;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 </style>

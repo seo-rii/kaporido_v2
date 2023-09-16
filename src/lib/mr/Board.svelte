@@ -14,13 +14,13 @@
     export let blocker,
         mask = true,
         round = 0,
-        act = false
+        dragged = false
 
     const op = tweened(mask ? 0 : 1, {duration: 500})
     $: $op = mask ? 0 : 1;
 </script>
 
-<App bind:round {act} on:act>
+<App bind:round bind:dragged on:act>
     <T.Mesh receiveShadow rotation.x={degToRad(-90)}>
         <T.CircleGeometry args={[8, 72]}/>
         <T.MeshStandardMaterial color="#555"/>

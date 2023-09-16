@@ -10,14 +10,14 @@
     const selectable = setContext('selectable', writable(0));
     const dpr = setContext('dpr', writable(1.2));
 
-    export let round = 0, act = false;
+    export let round = 0, dragged = false;
 </script>
 
 <main class:cursor={$selectable}>
     <Canvas dpr={$dpr}>
         <T.Scene bind:ref={$scene}>
             <World>
-                <Camera bind:round {act} on:act/>
+                <Camera bind:round bind:dragged on:act/>
                 <slot/>
             </World>
         </T.Scene>
