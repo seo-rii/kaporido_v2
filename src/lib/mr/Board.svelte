@@ -4,7 +4,8 @@
     import {degToRad} from "three/src/math/MathUtils.js"
     import Place from "$lib/mr/Place.svelte"
     import {setContext} from "svelte"
-    import Blocker from "$lib/mr/Blocker.svelte";
+    import IBlocker from "$lib/mr/IBlocker.svelte";
+    import LBlocker from "$lib/mr/LBlocker.svelte";
     import {tweened} from "svelte/motion";
 
     const MAP_SIZE = setContext('MAP_SIZE', 6)
@@ -44,10 +45,18 @@
     {/each}
 
     {#each blocker.kaist.i as [x, y, d], i(i)}
-        <Blocker kaist {x} {y} {d}/>
+        <IBlocker kaist {x} {y} {d} {i}/>
     {/each}
 
     {#each blocker.potek.i as [x, y, d], i(i)}
-        <Blocker postech {x} {y} {d}/>
+        <IBlocker postech {x} {y} {d} {i}/>
+    {/each}
+
+    {#each blocker.kaist.l as [x, y, d], i(i)}
+        <LBlocker kaist {x} {y} {d} i={i + 7}/>
+    {/each}
+
+    {#each blocker.potek.l as [x, y, d], i(i)}
+        <LBlocker postech {x} {y} {d} i={i + 7}/>
     {/each}
 </App>

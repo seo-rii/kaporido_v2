@@ -8,6 +8,10 @@
     const ACTION_MOVE = 1, ACTION_PLACE_I = 2, ACTION_PLACE_L = 3;
 
     let actions = [
+        [3, 7, 1, 1],
+        [3, 7, 3, 2],
+        [3, 8, 3, 3],
+        [3, 8, 1, 4],
         [2, 1, 1, 1],
         [2, 1, 1, 2],
         [2, 1, 7, 1],
@@ -26,6 +30,15 @@
                 break;
             }
         }
+        if (type === ACTION_PLACE_L) {
+            for (const i of target.l) {
+                if (i[1] >= 1 && i[1] <= 9) continue;
+                i[0] = x;
+                i[1] = y;
+                i[2] = w;
+                break;
+            }
+        }
         blocker = blocker;
     }
 
@@ -34,10 +47,15 @@
     }
 
     onMount(() => {
-        for (let i = 1; i <= 6; i++) {
-            const x = 9 * i / 6
+        for (let i = 1; i <= 7; i++) {
+            const x = 5 * i / 7 + 0.5
             blocker.kaist.i.push([x, -1.2, 1])
             blocker.potek.i.push([x, 9 + 1.2, 1])
+        }
+        for (let i = 1; i <= 3; i++) {
+            const x = 9 * i / 7 + 5
+            blocker.kaist.l.push([x, -0.7, 1.5])
+            blocker.potek.l.push([x - 0.5, 9 + 1.7, -0.5])
         }
     })
 </script>

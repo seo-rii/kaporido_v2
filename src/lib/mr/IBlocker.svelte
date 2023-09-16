@@ -3,7 +3,7 @@
     import {getContext} from "svelte";
     import {Color, MeshPhysicalMaterial, MeshStandardMaterial} from "three";
     import {tweened} from "svelte/motion";
-    import {circInOut, cubicOut, quadInOut, quadOut, quartInOut} from "svelte/easing";
+    import {cubicOut, quadInOut, quadOut, quartInOut} from "svelte/easing";
 
     const MAP_SIZE = getContext('MAP_SIZE');
     const BOARD_SIZE = getContext('BOARD_SIZE');
@@ -13,7 +13,7 @@
     const HIGHLIGHT_COLOR = new Color(0x00ff00);
     const hgl = tweened(0, {duration: 100});
 
-    export let x = 0, y = 0, d = 0, kaist, postech;
+    export let x = 0, y = 0, d = 0, i = 0, kaist = false, postech = false;
     let hover, material;
 
     function gx(x: number, d: number) {
@@ -31,7 +31,9 @@
     let _x = tweened(gx(x, d), {easing: quadInOut, duration: 1600}),
         _y = tweened(gy(y, d), {easing: quadInOut, duration: 1600});
     let z = tweened(3.31, {easing: quartInOut, duration: 1000});
-    z.set(0.31, {easing: cubicOut, duration: 1500});
+    let op = tweened(0, {easing: quartInOut, duration: 1000});
+    setTimeout(() => z.set(0.31 + i * 0.001, {easing: cubicOut, duration: 1500}), i * 100);
+    setTimeout(() => op.set(1), Math.pow(i, 0.7) * 300 + 300);
     let r = tweened((d - 1) * Math.PI / 2, {easing: quartInOut, duration: 1000});
 
     $: _l = MAP_SIZE / BOARD_SIZE * 2;
@@ -51,24 +53,17 @@
 
     $: {
         if (material) material.dispose();
-        let emissive = (kaist ? POSTECH_COLOR : KAIST_COLOR).clone();
+        let emissive = new Color(0xffffff).clone().lerp(kaist ? POSTECH_COLOR : KAIST_COLOR, $op);
         emissive.lerp(HIGHLIGHT_COLOR, $hgl);
-        material = true ? new MeshPhysicalMaterial({
-            color: kaist ? 0x8f34eb : 0x8f34eb,
+        material = new MeshPhysicalMaterial({
+            color: 0x8f34eb,
             roughness: 0.033,
             transmission: 0.8,
             thickness: 1,
             emissive,
-            emissiveIntensity: (1.48 + $hgl * 4) * 0.8,
-        }) : new MeshStandardMaterial({
-            color: kaist ? KAIST_COLOR : POSTECH_COLOR,
-            roughness: 0.2,
-            metalness: 0.7,
-            emissive,
-            emissiveIntensity: 1.48 + $hgl * 4,
-            side: 2,
-            transparent: true,
-            opacity: 0.7,
+            emissiveIntensity: (1.48 + $hgl * 4) * 0.8 * $op,
+            opacity: $op,
+            transparent: $op !== 1
         });
     }
 
@@ -76,8 +71,8 @@
     $: if (px !== x || py !== y) {
         px = x;
         py = y;
-        z.set(2.2, {easing: quadOut, duration: 1000});
-        setTimeout(() => z.set(0.31, {easing: quartInOut, duration: 1500}), 900);
+        z.set(2.2 + i * 0.001, {easing: quadOut, duration: 1000});
+        setTimeout(() => z.set(0.31 + i * 0.001, {easing: quartInOut, duration: 1500}), 900);
     }
 </script>
 
