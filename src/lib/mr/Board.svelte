@@ -7,6 +7,7 @@
     import IBlocker from "$lib/mr/IBlocker.svelte";
     import LBlocker from "$lib/mr/LBlocker.svelte";
     import {tweened} from "svelte/motion";
+    import Player from "$lib/mr/Player.svelte";
 
     const MAP_SIZE = setContext('MAP_SIZE', 6)
     const BOARD_SIZE = setContext('BOARD_SIZE', 9)
@@ -43,6 +44,9 @@
             <Place {x} {y}/>
         {/each}
     {/each}
+
+    <Player postech x={5} y={9}/>
+    <Player kaist x={5} y={1}/>
 
     {#each blocker.kaist.i as [x, y, d], i(i)}
         <IBlocker kaist {x} {y} {d} {i}/>
