@@ -42,12 +42,12 @@
 </script>
 
 {#if postech}
-    <GLTF url="/ponix.gltf" castShadow recieveShadow position.x={__y} position.y={__z} position.z={__x}
+    <GLTF url="/kaporido_v2/ponix.gltf" castShadow recieveShadow position.x={__y} position.y={__z} position.z={__x}
           rotation.y={-Math.PI / 2}/>
     <T.SpotLight castShadow position.x={__y + 5} position.y={__z + 5} position.z={__x} lookAt={[__y + 5, __z, __x]}
                  intensity={9.9} color="#ed4434" penumbra={0.2} angle={0.2} decay={2} distance={20}/>
 {:else}
-    <GLTF url="/nupjuk.gltf" castShadow recieveShadow position.x={__y} position.y={__z} position.z={__x}
+    <GLTF url="/kaporido_v2/nupjuk.gltf" castShadow recieveShadow position.x={__y} position.y={__z} position.z={__x}
           rotation.y={Math.PI / 2}/>
     <T.SpotLight castShadow position.x={__y - 5} position.y={__z + 5} position.z={__x} lookAt={[__y - 5, __z, __x]}
                  intensity={9.9} color="#2d8ad6" penumbra={0.2} angle={0.2} decay={2} distance={20}/>
