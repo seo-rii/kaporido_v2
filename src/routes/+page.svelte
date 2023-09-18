@@ -5,12 +5,19 @@
 
     let round = 0, blocker = {kaist: {i: [], l: []}, potek: {i: [], l: []}}, dragged = false, f = false, win = null;
     $: turn = round % 2 ? "POSTECH" : "KAIST";
+    let position = {kaist: [5, 1], potek: [5, 9]};
 
     const ACTION_MOVE = 1, ACTION_PLACE_I = 2, ACTION_PLACE_L = 3, GAME_FIN = 4;
 
     let actions = [
+        [1, 5, 2],
+        [1, 5, 8],
         [3, 7, 1, 1],
+        [1, 5, 7],
+        [2, 5, 2, 2],
+        [1, 5, 6],
         [3, 7, 3, 2],
+        [1, 5, 5],
         [3, 8, 3, 3],
         [3, 8, 1, 4],
         [2, 1, 1, 1],
@@ -23,6 +30,13 @@
 
     function act(type, x, y, w) {
         const target = round % 2 ? blocker.potek : blocker.kaist;
+        if (type === ACTION_MOVE) {
+            if (round % 2) {
+                position.potek = [x, y];
+            } else {
+                position.kaist = [x, y];
+            }
+        }
         if (type === ACTION_PLACE_I) {
             for (const i of target.i) {
                 if (i[1] >= 1 && i[1] <= 9) continue;
@@ -102,7 +116,7 @@
 <div class="notify" class:show={dragged}>아무 곳이나 눌러서 돌아가기</div>
 <div class="notify" class:show={!dragged && f && !win}>다음</div>
 
-<Board bind:round bind:blocker bind:dragged on:act={next}/>
+<Board bind:round bind:position bind:blocker bind:dragged on:act={next}/>
 
 <style lang="scss">
   .turn {

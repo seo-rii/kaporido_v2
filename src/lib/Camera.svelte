@@ -14,8 +14,9 @@
         _cameraP2 = tweened(5, {duration: 2000, easing: expoOut}),
         _cameraP3 = tweened(0, {duration: 2000, easing: expoOut});
 
+    const r = 8.8;
     $: [$_cameraP1, $_cameraP2, $_cameraP3] =
-        [7.6 * Math.exp(-$cameraZ) * Math.cos($rotation) + 0.2, -9.5 + 15 * Math.exp(0.5 * Math.sin($cameraZ)), 7.6 * Math.exp(-$cameraZ) * Math.sin($rotation)];
+        [r * Math.exp(-$cameraZ) * Math.cos($rotation) + 0.2, -9.5 + 15 * Math.exp(0.5 * Math.sin($cameraZ)), r * Math.exp(-$cameraZ) * Math.sin($rotation)];
 
     let click = false, drag = false, lastX = 0, lastY = 0, initX = 0, initY = 0,
         cursor = {x: 0, y: 0};

@@ -13,6 +13,7 @@
     const BOARD_SIZE = setContext('BOARD_SIZE', 9)
 
     export let blocker,
+        position,
         mask = true,
         round = 0,
         dragged = false
@@ -45,8 +46,8 @@
         {/each}
     {/each}
 
-    <Player postech x={5} y={9}/>
-    <Player kaist x={5} y={1}/>
+    <Player postech x={position.potek[0]} y={position.potek[1]}/>
+    <Player kaist x={position.kaist[0]} y={position.kaist[1]}/>
 
     {#each blocker.kaist.i as [x, y, d], i(i)}
         <IBlocker kaist {x} {y} {d} {i}/>
