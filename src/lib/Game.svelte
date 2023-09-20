@@ -67,6 +67,7 @@
             nxt = false;
             timer = 30000;
             round++;
+            setTimeout(next, 1200);
         } else {
             f = true;
             act(...actions[round]);
