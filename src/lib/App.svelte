@@ -30,6 +30,7 @@
 <style lang="scss">
   main {
     height: 100%;
+    background: #000;
 
     &.cursor {
       cursor: pointer;
