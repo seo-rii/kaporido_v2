@@ -2,6 +2,7 @@
     import Board from "$lib/mr/Board.svelte";
     import {onMount} from "svelte";
     import {fly} from "svelte/transition";
+    import {page} from "$app/stores";
 
     export let actions = [], p2 = false;
 
@@ -17,7 +18,7 @@
         r = true;
         const [type, x, y, w] = args;
         const t = args.slice(-1)[0] * 1000, c = Date.now();
-        await new Promise(r => {
+        if(!$page.url.searchParams.get('fast')) await new Promise(r => {
             const intv = setInterval(() => {
                 const el = Date.now() - c;
                 timer = 30000 - el;
