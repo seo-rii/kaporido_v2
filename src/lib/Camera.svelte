@@ -92,18 +92,19 @@
         drag = false;
     }
 
-    let f = false;
+    let f = false, l = false;
 
     const clickHandler = () => click && !dragged && dispatch('act');
 
     const {renderer: {domElement: target}} = useThrelte();
 
-    $: {
+    $: if (l) {
         rotation.set((round - 1) * Math.PI, {duration: 3000, easing: expoOut});
         $cameraZ = 0.35;
     }
 
     onMount(() => {
+        setTimeout(() => l = true, 3000);
         target.addEventListener('mousedown', mouseDownHandler, {passive: true});
         target.addEventListener('mousemove', mouseMoveHandler, {passive: true});
         target.addEventListener('mouseup', mouseUpHandler, {passive: true});
