@@ -6,13 +6,27 @@
     export let actions = [], p2 = false;
 
     let round = p2 ? 1 : 0, blocker = {kaist: {i: [], l: []}, potek: {i: [], l: []}}, dragged = false, f = false,
-        win = null;
+        win = null, nxt = false, r = false;
     $: turn = round % 2 ? "POSTECH" : "KAIST";
-    let position = {kaist: [5, 1], potek: [5, 9]};
+    let position = {kaist: [5, 1], potek: [5, 9]}, timer = 30000;
 
     const ACTION_MOVE = 1, ACTION_PLACE_I = 2, ACTION_PLACE_L = 3, GAME_FIN = 0;
 
-    function act(type, x, y, w) {
+    async function act(...args: any[]) {
+        if (r) return;
+        r = true;
+        const [type, x, y, w] = args;
+        const t = args.slice(-1)[0] * 1000, c = Date.now();
+        await new Promise(r => {
+            const intv = setInterval(() => {
+                const el = Date.now() - c;
+                timer = 30000 - el;
+                if (el >= t) {
+                    clearInterval(intv);
+                    r(null);
+                }
+            }, 100);
+        });
         const target = round % 2 ? blocker.potek : blocker.kaist;
         if (type === ACTION_MOVE) {
             if (round % 2) {
@@ -43,11 +57,15 @@
             win = [x, y];
         }
         blocker = blocker;
+        nxt = true;
+        r = false;
     }
 
     function next() {
         if (!act || f) {
             f = false;
+            nxt = false;
+            timer = 30000;
             round++;
         } else {
             f = true;
@@ -93,12 +111,16 @@
 <div class="turn postech" class:current={(round % 2)}>
     POSTECH
 </div>
+<div class="timer">
+    <div class="inner" style:width="{timer / 300}%"></div>
+    <span>{(timer / 1000).toFixed(1)}초 남음</span>
+</div>
 <div style="position: fixed;left: 26px;top: 26px;color: white;font-size: 20px">#{Math.floor((round - p2) / 2) + 1}</div>
 <img class="avatar" class:current={!(round % 2)} src="/kaporido_v2/nupjuk.jpeg">
 <img class="avatar" class:current={(round % 2)} src="/kaporido_v2/ponix.webp">
 
 <div class="notify" class:show={dragged}>아무 곳이나 눌러서 돌아가기</div>
-<div class="notify" class:show={!dragged && f && !win}>다음</div>
+<div class="notify" class:show={!dragged && nxt && !win}>다음</div>
 
 <Board bind:round bind:position bind:blocker bind:dragged on:act={next}/>
 
@@ -186,5 +208,33 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+
+  .timer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 120px;
+    background: #888888cc;
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1.2em;
+    border-radius: 12px;
+    overflow: hidden;
+
+    .inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
   }
 </style>
