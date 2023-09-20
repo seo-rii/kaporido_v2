@@ -3,13 +3,14 @@
     import {onMount} from "svelte";
     import {fly} from "svelte/transition";
 
-    let round = 0, blocker = {kaist: {i: [], l: []}, potek: {i: [], l: []}}, dragged = false, f = false, win = null;
+    export let actions = [], p2 = false;
+
+    let round = p2 ? 1 : 0, blocker = {kaist: {i: [], l: []}, potek: {i: [], l: []}}, dragged = false, f = false,
+        win = null;
     $: turn = round % 2 ? "POSTECH" : "KAIST";
     let position = {kaist: [5, 1], potek: [5, 9]};
 
     const ACTION_MOVE = 1, ACTION_PLACE_I = 2, ACTION_PLACE_L = 3, GAME_FIN = 0;
-
-    export let actions = [[1, 5, 2, 1], [1, 5, 8], [2, 5, 8, 2], [1, 4, 8], [1, 6, 2, 1], [1, 4, 7], [1, 7, 2, 1], [2, 7, 8, 2], [1, 7, 3, 1], [2, 8, 9, 2], [1, 8, 3, 1], [2, 8, 5, 2], [1, 7, 3, 1], [2, 3, 8, 2], [3, 1, 1, 4], [1, 4, 6], [2, 1, 8, 2], [1, 4, 5], [3, 1, 5, 2], [1, 4, 4], [1, 7, 4, 1], [1, 4, 3], [2, 3, 3, 2], [1, 5, 3], [1, 7, 5, 1], [2, 6, 7, 2], [3, 9, 4, 4], [2, 7, 5, 1], [1, 7, 4, 1], [1, 5, 2], [2, 5, 2, 2], [3, 6, 3, 3], [1, 7, 5, 1], [3, 7, 5, 3], [1, 7, 4, 1], [1, 4, 2], [2, 3, 2, 2], [1, 3, 2], [1, 6, 4, 1], [2, 8, 3, 1], [1, 6, 5, 1], [1, 2, 2], [1, 5, 5, 1], [1, 2, 1], [0, 2, 1]];
 
     function act(type, x, y, w) {
         const target = round % 2 ? blocker.potek : blocker.kaist;
@@ -86,13 +87,13 @@
         </p>
     </div>
 {/if}
-<div class="turn kaist" class:current={!(round % 2)}>
+<div class="turn kaist" class:current={!((round) % 2)}>
     KAIST
 </div>
 <div class="turn postech" class:current={(round % 2)}>
     POSTECH
 </div>
-<div style="position: fixed;left: 26px;top: 26px;color: white;font-size: 20px">#{Math.floor(round / 2) + 1}</div>
+<div style="position: fixed;left: 26px;top: 26px;color: white;font-size: 20px">#{Math.floor((round - p2) / 2) + 1}</div>
 <img class="avatar" class:current={!(round % 2)} src="/kaporido_v2/nupjuk.jpeg">
 <img class="avatar" class:current={(round % 2)} src="/kaporido_v2/ponix.webp">
 
