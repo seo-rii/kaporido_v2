@@ -6,31 +6,33 @@
 		<meta name="viewport" content="width=device-width" />
 		
 		<link href="../_app/immutable/assets/0.7d414901.css" rel="stylesheet">
-		<link href="../_app/immutable/assets/Game.e1b5551d.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.cbfa3f27.js">
+		<link href="../_app/immutable/assets/Game.ae28c58a.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.77d60bce.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.c1272f9f.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.fd4a1c4f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.befd2632.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.c014f08a.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.aae15ab5.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.95077552.js">
 		<link rel="modulepreload" href="../_app/immutable/nodes/0.e23068c3.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/3.4dbe9d25.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/Game.840e7273.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/3.c9e0d236.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Game.e50585c1.js">
 	</head>
 	<body>
 		<div>
 
 
 
-<div class="turn kaist svelte-oswary current">KAIST
+<div class="turn kaist svelte-yah2ed current">KAIST
 </div>
-<div class="turn postech svelte-oswary">POSTECH
+<div class="turn postech svelte-yah2ed">POSTECH
 </div>
+<div class="timer svelte-yah2ed"><div class="inner svelte-yah2ed" style="width: 100%;"></div>
+    <span class="svelte-yah2ed">30.0초 남음</span></div>
 <div style="position: fixed;left: 26px;top: 26px;color: white;font-size: 20px">#1</div>
-<img class="avatar svelte-oswary current" src="/kaporido_v2/nupjuk.jpeg">
-<img class="avatar svelte-oswary" src="/kaporido_v2/ponix.webp">
+<img class="avatar svelte-yah2ed current" src="/kaporido_v2/nupjuk.jpeg">
+<img class="avatar svelte-yah2ed" src="/kaporido_v2/ponix.webp">
 
-<div class="notify svelte-oswary">아무 곳이나 눌러서 돌아가기</div>
-<div class="notify svelte-oswary">다음</div>
+<div class="notify svelte-yah2ed">아무 곳이나 눌러서 돌아가기</div>
+<div class="notify svelte-yah2ed">다음</div>
 
 <main class="svelte-surtxf"><canvas class="svelte-o3oskp">
 </canvas>
@@ -40,7 +42,7 @@
 			
 			<script>
 				{
-					__sveltekit_1xmxppb = {
+					__sveltekit_48pre9 = {
 						assets: "/kaporido_v2",
 						base: new URL("..", location).pathname.slice(0, -1),
 						env: {}
@@ -51,8 +53,8 @@
 					const data = [null,null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.cbfa3f27.js"),
-						import("../_app/immutable/entry/app.aae15ab5.js")
+						import("../_app/immutable/entry/start.77d60bce.js"),
+						import("../_app/immutable/entry/app.95077552.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],
