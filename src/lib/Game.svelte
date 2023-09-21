@@ -106,7 +106,7 @@
         {:else}
             <img src="/kaporido_v2/pf.png" style="width: 120px;height: 120px;border-radius: 12px">
         {/if}
-        <div style="font-size: 3em;color: white;margin: 1em 0 0.4em 0">{['KAIST', 'POSTECH'][win[0]]} 승리!</div>
+        <div style="font-size: 3em;color: white;margin: 1em 0 0.4em 0">{['KAIST', 'POSTECH', 'POSTECH'][win[0]]} 승리!</div>
         <p style="font-size: 1.2em;color: white;margin: 0">
             {#if win[1] === 1}
                 우승 조건 달성
