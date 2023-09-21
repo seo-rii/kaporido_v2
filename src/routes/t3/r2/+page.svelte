@@ -2,7 +2,7 @@
     import Game from "$lib/Game.svelte";
 </script>
 
-<Game actions={[
+<Game p2 actions={[
 [1, 5, 8, 26.56201720237732],
 [1, 5, 2, 1, 0.0005371570587158203],
 [2, 3, 9, 2, 24.40774393081665],
