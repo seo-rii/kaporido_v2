@@ -18,7 +18,7 @@
         r = true;
         const [type, x, y, w] = args;
         const t = args.slice(-1)[0] * 1000, c = Date.now();
-        if(!$page.url.searchParams.has('fast')) await new Promise(r => {
+        if (!$page.url.searchParams.has('fast')) await new Promise(r => {
             const intv = setInterval(() => {
                 const el = Date.now() - c;
                 timer = 30000 - el;
@@ -71,7 +71,7 @@
             setTimeout(next, 1200);
         } else {
             f = true;
-            act(...actions[round]);
+            act(...actions[round - p2]);
         }
     }
 
