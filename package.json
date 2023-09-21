@@ -29,6 +29,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"crypto-js": "^4.1.1",
+		"js-confetti": "^0.11.0",
 		"postprocessing": "^6.32.1"
 	}
 }

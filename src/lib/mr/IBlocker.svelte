@@ -1,7 +1,7 @@
 <script lang="ts">
     import {T} from "@threlte/core"
     import {getContext} from "svelte";
-    import {Color, MeshPhysicalMaterial, MeshStandardMaterial} from "three";
+    import {Color, MeshPhysicalMaterial} from "three";
     import {tweened} from "svelte/motion";
     import {cubicOut, quadInOut, quadOut, quartInOut} from "svelte/easing";
 

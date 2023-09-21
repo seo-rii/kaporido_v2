@@ -7,7 +7,7 @@
     export let round = 0, dragged = false;
 
     const dispatch = createEventDispatcher();
-    const rotation = tweened(-Math.PI, {duration: 1000, easing: expoOut});
+    const rotation = tweened(-Math.PI, {duration: 700, easing: expoOut});
     const cameraZ = tweened(0, {duration: 100, easing: expoOut});
 
     const _cameraP1 = tweened(0, {duration: 2000, easing: expoOut}),
